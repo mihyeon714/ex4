@@ -5,6 +5,10 @@
 	<title>Home</title>
 </head>
 <body>
+
+<a href="notice/noticeList">NOTICE 리스트보기</a>
+<a href="freeBoard/freeBoardList">FREEBOARD 리스트보기</a>
+
 <h1>
 	Hello world!  
 </h1>
