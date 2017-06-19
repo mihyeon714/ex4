@@ -22,8 +22,12 @@
 	</beans:bean>
 
 	
-	<context:component-scan base-package="com.choa.ex4" />
-	<context:component-scan base-package="com.choa.notice" /> 
+	<context:component-scan base-package="com.choa.ex4" use-default-filters="false"> <!-- 모든annotation을 찾지 않겠어요 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/><!-- Controller만 찾겠습니다 -->
+	</context:component-scan>
+	<context:component-scan base-package="com.choa.notice">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan> 
 	<context:component-scan base-package="com.choa.freeBoard" /> 
 	
 	

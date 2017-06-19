@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- id, pw로 DB 연결을 위한 아이 -->
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
 		<property name="username" value="user03"/>
 		<property name="password" value="user03"/>
-		<property name="url" value="jdbc:oracle:thin:@192.168.219.128:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@192.168.20.22:1521:xe"/>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 	</bean>
+	
+	
+	<!-- mybatis와 spring을 연결하는 코드 -->
+	
+	
+	<!-- xml(sql문 가지고있는) 파일과 connection 정보를 아는애 // 이미 만들어져 있는 애 -->
+	<!-- 우리가 코드를 모르니까 xml에서 객체를 만들 수 밖에.. -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+		<!-- java부분은 배포시에 없어진다 class파일로 저장되는 기본경로:classpath(src/main/resources||...) -->
+	</bean> 
+	
+	<!-- 최종적으로 연결해주는애//결국 DAO 에서는 얘가 필요하다  -->
+	<!-- sqlSession 타입임 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean" />
+	</bean>
+	
+	
 </beans>

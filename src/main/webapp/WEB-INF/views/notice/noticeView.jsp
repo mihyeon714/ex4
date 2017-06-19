@@ -24,10 +24,10 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>${noticeDTO.num}</td>
-				<td>${noticeDTO.title}</td>
-				<td>${noticeDTO.writer}</td>
-				<td>${noticeDTO.hit}</td>
+				<td>${dto.num}</td>
+				<td>${dto.title}</td>
+				<td>${dto.writer}</td>
+				<td>${dto.hit}</td>
 			</tr>
 		</tbody>
 		<thead>
@@ -37,14 +37,14 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="4">${noticeDTO.contents}</td>
+				<td colspan="4">${dto.contents}</td>
 			</tr>
 		</tbody>
 	</table>
 	
 	
 	<a href="./noticeList">리스트보기</a> <br/>
-	<a href="./noticeUpdate?num=${noticeDTO.num}">수정</a>
-	<a href="./noticeDelete?num=${noticeDTO.num}">삭제</a>
+	<a href="./noticeUpdate?num=${dto.num}">수정</a>
+	<a href="./noticeDelete?num=${dto.num}">삭제</a>
 </body>
 </html>

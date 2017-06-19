@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.choa.board.BoardDAO;
@@ -23,12 +24,64 @@ public class NoticeDAOImpl implements BoardDAO{
 	
 
 	@Inject
-	private DataSource dataSource;
+	private SqlSession sqlSession; //test 에서 확인완료
+	private static final String NAMESPACE = "NoticeMapper."; 
+	//final은 바뀌면 안될때 상수처럼(변수명은대문자로사용), static 은 ...
+	//private DataSource dataSource;
+	
+	
+
+	@Override
+	public BoardDTO boardView(int num) throws Exception {
+		
+		
+		BoardDTO boardDTO = sqlSession.selectOne(NAMESPACE+"view",num);
+		//id,parameter //즉 NoticeMapper.view , num
+		//return type이 T 라고 되어있는데 mapper 에 설정한 resultType을 의미한다
+		//즉 여기서는 NoticDTO를 의미
+		
+		return boardDTO;
+		
+		
+		//이전 친구들..
+		//Connection con = dataSource.getConnection();
+		//PreparedStatement st = null;
+		//ResultSet rs = null;
+		//NoticeDTO noticeDTO = null;
+		//String sql = "select * from notice where num=?";
+		
+
+		//st = con.prepareStatement(sql);
+		//st.setInt(1, num);
+		//rs = st.executeQuery();
+		
+		/*
+		if(rs.next()){
+			noticeDTO = new NoticeDTO();
+			noticeDTO.setNum(rs.getInt("num"));
+			noticeDTO.setWriter(rs.getString("writer"));
+			noticeDTO.setTitle(rs.getString("title"));
+			noticeDTO.setContents(rs.getString("contents"));
+			noticeDTO.setReg_date(rs.getDate("reg_date"));
+			noticeDTO.setHit(rs.getInt("hit"));
+		}
+		*/
+		//close 필수
+		//DBConnect.disConnect(rs, st, con);
+
+		//return noticeDTO;
+	}
+	
+	
 	
 	
 	@Override
 	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.selectList(NAMESPACE+"list",rowMaker);
+		
+		/*
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		List<BoardDTO> ar = new ArrayList<BoardDTO>();
@@ -53,40 +106,16 @@ public class NoticeDAOImpl implements BoardDAO{
 		DBConnect.disConnect(rs, st, con);
 		
 		return ar;
+		*/
 	}
 
-	@Override
-	public BoardDTO boardView(int num) throws Exception {
-		Connection con = dataSource.getConnection();
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		NoticeDTO noticeDTO = null;
-		String sql = "select * from notice where num=?";
-		
-
-		st = con.prepareStatement(sql);
-		st.setInt(1, num);
-		rs = st.executeQuery();
-		
-		if(rs.next()){
-			noticeDTO = new NoticeDTO();
-			noticeDTO.setNum(rs.getInt("num"));
-			noticeDTO.setWriter(rs.getString("writer"));
-			noticeDTO.setTitle(rs.getString("title"));
-			noticeDTO.setContents(rs.getString("contents"));
-			noticeDTO.setReg_date(rs.getDate("reg_date"));
-			noticeDTO.setHit(rs.getInt("hit"));
-		}
-		
-		//close 필수
-		DBConnect.disConnect(rs, st, con);
-
-		return noticeDTO;
-	}
 
 	@Override
 	public int boardWrite(BoardDTO boardDTO) throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.insert(NAMESPACE+"write",boardDTO);
+		
+		/*Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
 		String sql = "insert into notice (num,writer,title,contents,reg_date,hit) values (notice_seq.nextval,?,?,?,sysdate,0)";
@@ -99,12 +128,16 @@ public class NoticeDAOImpl implements BoardDAO{
 		
 		DBConnect.disConnect(st, con);
 		
-		return result;
+		return result;*/
 	}
 
 	@Override
 	public int boardUpdate(BoardDTO boardDTO) throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.update(NAMESPACE+"update", boardDTO);
+		
+		
+		/*Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
 		String sql = "update notice set title=?,contents=? where num=?";
@@ -117,12 +150,15 @@ public class NoticeDAOImpl implements BoardDAO{
 		
 		DBConnect.disConnect(st, con);
 		
-		return result;
+		return result;*/
 	}
 
 	@Override
 	public int boardDelete(int num) throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.delete(NAMESPACE+"delete",num);
+		
+		/*Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
 		String sql = "delete notice where num=?";
@@ -133,12 +169,16 @@ public class NoticeDAOImpl implements BoardDAO{
 		
 		DBConnect.disConnect(st, con);
 
-		return result;
+		return result;*/
 	}
 
 	@Override
 	public int boardCount() throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.selectOne(NAMESPACE+"count");
+		
+		/*
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
@@ -155,6 +195,8 @@ public class NoticeDAOImpl implements BoardDAO{
 		DBConnect.disConnect(rs, st, con);
 		
 		return result;
+		*/
+		
 	}
 
 	@Override
