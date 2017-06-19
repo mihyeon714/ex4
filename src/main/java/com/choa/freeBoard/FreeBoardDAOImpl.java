@@ -9,6 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.choa.board.BoardDAO;
@@ -22,13 +23,16 @@ public class FreeBoardDAOImpl implements BoardDAO{
 	
 	
 	@Inject
-	private DataSource dataSource;
-	
-	
+	private SqlSession sqlSession;
+	private static final String NAMESPACE = "FreeBoardMapper."; //FreeBoardMapper.xml 의 id
+
 	
 	@Override
 	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.selectList(NAMESPACE+"list", rowMaker); //Mapper에서는 그냥 제네릭으로 알려주고 여기서 list임을 알려줌
+		/*
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		List<BoardDTO> ar = new ArrayList<BoardDTO>();
@@ -59,11 +63,16 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		DBConnect.disConnect(rs, st, con);
 		
 		return ar;
+		*/
 	}
 
 	@Override
 	public BoardDTO boardView(int num) throws Exception {
-		Connection con = dataSource.getConnection();
+		
+		return sqlSession.selectOne(NAMESPACE+"view", num);
+		
+		/*
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		FreeBoardDTO freeBoardDTO = null;
@@ -91,11 +100,14 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		DBConnect.disConnect(rs, st, con);
 
 		return freeBoardDTO;
+		*/
+		
 	}
 
 	@Override
 	public int boardWrite(BoardDTO boardDTO) throws Exception {
-		Connection con = dataSource.getConnection();
+		return sqlSession.insert(NAMESPACE+"write", boardDTO);
+		/*Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
 		String sql = "insert into freeboard values(freeboard_seq.nextval,?,?,?,sysdate,0,freeboard_seq.currval,0,0)";
@@ -108,12 +120,14 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		
 		DBConnect.disConnect(st, con);
 		
-		return result;
+		return result;*/
 	}
 
 	@Override
 	public int boardUpdate(BoardDTO boardDTO) throws Exception {
-		Connection con = dataSource.getConnection();
+		return sqlSession.update(NAMESPACE+"update", boardDTO);
+		/*
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
 		String sql = "update freeboard set title=?,contents=? where num=?";
@@ -127,11 +141,14 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		DBConnect.disConnect(st, con);
 		
 		return result;
+		*/
 	}
 
 	@Override
 	public int boardDelete(int num) throws Exception {
-		Connection con = dataSource.getConnection();
+		return sqlSession.delete(NAMESPACE+"delete", num);
+		/*
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
 		String sql = "delete freeboard where num=?";
@@ -143,11 +160,12 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		DBConnect.disConnect(st, con);
 
 		return result;
+		*/
 	}
 
 	@Override
 	public int boardCount() throws Exception {
-		Connection con = dataSource.getConnection();
+		Connection con = null;//dataSource.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
