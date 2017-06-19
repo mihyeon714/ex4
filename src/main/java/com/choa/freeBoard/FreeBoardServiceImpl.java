@@ -49,6 +49,15 @@ public class FreeBoardServiceImpl implements BoardService{
 	public int boardDelete(int num) throws Exception {
 		return freeBoardDAO.boardDelete(num);
 	}
+	
+	
+	public int boardReply(FreeBoardDTO freeBoardDTO){
+		int result = 0;
+		//사전작업 후 
+		//등록
+		
+		return result;
+	}
 
 
 }

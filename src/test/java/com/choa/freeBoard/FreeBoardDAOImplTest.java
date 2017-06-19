@@ -66,12 +66,16 @@ public class FreeBoardDAOImplTest extends MyAbstractTest {
 		System.out.println("updateResult="+result);
 		*/
 		
+		/*
 		//list
 		PageMaker pageMaker = new PageMaker(1);
 		RowMaker rowMaker = pageMaker.getRowMaker("", "");
 		List<BoardDTO> ar = dao.boardList(rowMaker);
 		assertNotEquals(-1, ar.size()); //갯수가 -1이 아니면 됨
-		System.out.println("ar 1 contents"+ar.get(0).getContents());
+		System.out.println("ar 1 contents= "+ar.get(0).getContents());
+		*/
+		
+		
 		
 	}
 

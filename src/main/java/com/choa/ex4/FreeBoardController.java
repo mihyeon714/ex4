@@ -98,4 +98,21 @@ public class FreeBoardController {
 		return "redirect:/freeBoard/freeBoardList?curPage=1";
 	}
 	
+	@RequestMapping(value="freeBoardReply", method=RequestMethod.GET)
+	public String freeBoardReply(Integer num, Model model){
+		if(num == null){
+			//답글달수가없습니다
+		}
+		
+		model.addAttribute("board", "freeBoardReply");
+		return "board/boardWrite";
+	}
+	
+
+	@RequestMapping(value="freeBoardReply", method=RequestMethod.POST)
+	public void freeBoardReply(FreeBoardDTO freeBoardDTO){
+		int result = freeBoardService.boardReply(freeBoardDTO);
+	}
+	
+	
 }

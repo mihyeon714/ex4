@@ -85,6 +85,7 @@ public class NoticeController {
 	//처리
 	@RequestMapping(value="noticeUpdate",method=RequestMethod.POST)
 	public String noticeUpdate(NoticeDTO noticeDTO, RedirectAttributes rd) throws Exception{
+		System.out.println("noticeController update num= "+noticeDTO.getNum());
 		int result = noticeService.boardUpdate(noticeDTO);
 		String message = "Update FAIL";
 		if(result > 0){

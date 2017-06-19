@@ -22,11 +22,11 @@
 		update freeboard set title=#{title},contents=#{contents} where num=#{num}
 	</update>
 	
-	<select id="list" resultType="com.choa.freeBoard.freeBoardDTO" parameterType="RowMaker">
+	<select id="list" resultType="com.choa.freeBoard.FreeBoardDTO" parameterType="com.choa.util.RowMaker">
 		select * from 
 		(select rownum R, F.* from 
 		(select * from freeboard order by ref desc,step asc) F) 
-		where between R #{startRow} and #{lastRow}
+		where R between  #{startRow} and #{lastRow}
 	</select>
 
 </mapper>

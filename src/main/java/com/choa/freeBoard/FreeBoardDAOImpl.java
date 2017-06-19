@@ -24,6 +24,7 @@ public class FreeBoardDAOImpl implements BoardDAO{
 	
 	@Inject
 	private SqlSession sqlSession;
+	
 	private static final String NAMESPACE = "FreeBoardMapper."; //FreeBoardMapper.xml 의 id
 
 	
