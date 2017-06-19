@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>Insert title here</title>
+<title>boardList</title>
 <script type="text/javascript">
 	var m = '${message}'; //redirect로 받은 message 임 
 	if( m != ''){
@@ -35,7 +35,7 @@
 					<td>${dto.num}</td>
 					<td>
 						<c:catch><c:forEach begin="1" end="${dto.depth}">ㄴ</c:forEach></c:catch>
-						<a href="noticeView?num=${dto.num}">${dto.title}</a>
+						<a href="../${board}/${board}View?num=${dto.num}">${dto.title}</a>
 					</td>
 					<td>${dto.writer}</td>
 					<td>${dto.reg_date}</td>

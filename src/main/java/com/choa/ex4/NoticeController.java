@@ -43,7 +43,7 @@ public class NoticeController {
 			num = 1;
 		}
 		BoardDTO noticeDTO = noticeService.boardView(num);
-		model.addAttribute("noticeDTO", noticeDTO);
+		model.addAttribute("dto", noticeDTO);
 	}
 	
 	@RequestMapping(value="noticeWrite",method=RequestMethod.GET)

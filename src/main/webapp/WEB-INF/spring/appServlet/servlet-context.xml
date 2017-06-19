@@ -20,6 +20,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+
 	
 	<context:component-scan base-package="com.choa.ex4" />
 	<context:component-scan base-package="com.choa.notice" /> 

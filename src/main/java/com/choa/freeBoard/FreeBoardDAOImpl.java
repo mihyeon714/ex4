@@ -98,7 +98,7 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		Connection con = dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
-		String sql = "";
+		String sql = "insert into freeboard values(freeboard_seq.nextval,?,?,?,sysdate,0,freeboard_seq.currval,0,0)";
 		
 		st = con.prepareStatement(sql);
 		st.setString(1, boardDTO.getWriter());
@@ -116,7 +116,7 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		Connection con = dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
-		String sql = "";
+		String sql = "update freeboard set title=?,contents=? where num=?";
 		
 		st = con.prepareStatement(sql);
 		st.setString(1, boardDTO.getTitle());
@@ -134,7 +134,7 @@ public class FreeBoardDAOImpl implements BoardDAO{
 		Connection con = dataSource.getConnection();
 		PreparedStatement st = null;
 		int result = 0;
-		String sql = "";
+		String sql = "delete freeboard where num=?";
 		
 		st = con.prepareStatement(sql);
 		st.setInt(1,num);
