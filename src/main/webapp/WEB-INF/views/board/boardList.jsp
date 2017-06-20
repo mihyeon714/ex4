@@ -11,24 +11,18 @@
 
 <script type="text/javascript">
 	$(function(){
-		
-		$("#preView").click(function(event){
-			alert("이전이 눌렸또다");
-			location.href = "${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}";
+		$(".go").click(function(){
+			/* 
+			//location사용하기
+			var cur = $(this).attr("id");
+			location.href="${board}List?curPage="+cur+"&search=${listInfo.search}&find=${listInfo.find}";
+			 */
+			//form 사용하기
+			document.frm.curPage.value=$(this).attr("id");
+			document.frm.search.value="${listInfo.search}";
+			document.frm.find.value="${listInfo.find}";
+			document.frm.submit();
 		});
-		
-		$("#nextView").click(function(event){
-			alert("다음이 눌렸또다");
-			location.href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}";
-		});
-		
-		$(".pageNumber").click(function(){
-			var curNumber = $(this).text(); //눌린 숫자 가져오기
-			//alert("클래스클릭 = "+curNumber); //확인함
-			location.href="${board}List?curPage="+curNumber+"&search=${listInfo.search}&find=${listInfo.find}"
-		});
-		
-		
 	});
 </script>
 
@@ -51,8 +45,9 @@ span{
 	<h1>${board}</h1>
 	
 	<div>
-		<form action="${board}List?curPage=${listInfo.curPage}&search=${listInfo.search}&find=${listInfo.find}">
-			<select name="search">
+		<form action="${board}List" name="frm">
+				<input type="hidden" name="curPage">
+				<select name="search">
 				<option value="title">TITLE</option>
 				<option value="writer">WRITER</option>
 				<option value="contents">CONTENTS</option>
@@ -91,15 +86,15 @@ span{
 	
 	
 	<c:if test="${listInfo.curBlock > 1}">
-		<span id="preView">[이전]</span>
+		<span class="go" id="${listInfo.startNum-listInfo.perBlock}">[이전]</span>
 	</c:if>
 	
 	<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
-		<span class="pageNumber">${i}</span>
+		<span class="go" id="${i}">${i}</span>
 	</c:forEach>
 	
 	<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
-		<span id="nextView">[다음]</span>
+		<span class="go" id="${listInfo.lastNum+1}">[다음]</span>
 	</c:if>
 	
 
