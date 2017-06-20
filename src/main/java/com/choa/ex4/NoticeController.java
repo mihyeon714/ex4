@@ -2,12 +2,9 @@ package com.choa.ex4;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.choa.board.BoardDTO;
 import com.choa.notice.NoticeDTO;
 import com.choa.notice.NoticeServiceImpl;
+import com.choa.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/notice/**")
@@ -29,26 +27,35 @@ public class NoticeController {
 	
 
 	@RequestMapping(value="noticeList",method=RequestMethod.GET)
-	public String noticeList(Model model, @RequestParam(defaultValue="1")Integer curPage) throws Exception{
-		List<BoardDTO> ar = noticeService.boardList(curPage);
+	public String noticeList(Model model,ListInfo listInfo) throws Exception{
+
+		//System.out.println("listInfo curPage= "+listInfo.getCurPage());
+		
+		List<BoardDTO> ar = noticeService.boardList(listInfo);
+		
+		
 		model.addAttribute("list", ar);
 		model.addAttribute("board", "notice");
+		model.addAttribute("listInfo", listInfo);
+		
 		return "board/boardList";
 	}
 	
 	
 	@RequestMapping(value="noticeView",method=RequestMethod.GET)
-	public void noticeView(Integer num, Model model) throws Exception{
+	public String noticeView(Integer num, Model model) throws Exception{
 		if(num == null){
 			num = 1;
 		}
 		BoardDTO noticeDTO = noticeService.boardView(num);
 		model.addAttribute("dto", noticeDTO);
+		return "board/boardView";
 	}
 	
 	@RequestMapping(value="noticeWrite",method=RequestMethod.GET)
-	public void noticeWrite(Model model){
+	public String noticeWrite(Model model){
 		model.addAttribute("path", "Write");
+		return "board/boardWrite";
 	}
 	
 	@RequestMapping(value="noticeWrite",method=RequestMethod.POST)
@@ -78,7 +85,7 @@ public class NoticeController {
 		BoardDTO noticeDTO = noticeService.boardView(num); //DTO 하나를 받아오는것
 		model.addAttribute("dto", noticeDTO);
 		model.addAttribute("path", "Update");
-		return "notice/noticeWrite";
+		return "board/boardWrite";
 	}
 	
 

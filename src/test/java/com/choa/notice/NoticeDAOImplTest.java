@@ -11,9 +11,11 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import org.w3c.dom.ls.LSInput;
 
 import com.choa.board.BoardDTO;
 import com.choa.ex4.MyAbstractTest;
+import com.choa.util.ListInfo;
 import com.choa.util.PageMaker;
 import com.choa.util.RowMaker;
 
@@ -43,11 +45,12 @@ public class NoticeDAOImplTest extends MyAbstractTest{
 		System.out.println("title= "+boardDTO.getTitle());
 		*/
 		
+		/*
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setTitle("hoho!");
 		noticeDTO.setWriter("myeon");
 		noticeDTO.setContents("hi everyone");
-		
+		*/
 		
 		//int result = dao.boardWrite(noticeDTO);
 		//int result = dao.boardDelete(324);
@@ -58,17 +61,30 @@ public class NoticeDAOImplTest extends MyAbstractTest{
 		//assertEquals(1, result);
 		//System.out.println("result= "+result);
 		
-		/*
+	/*
 		PageMaker pageMaker = new PageMaker(1);
-		RowMaker rowMaker = pageMaker.getRowMaker("", "");
-		List<BoardDTO> ar =dao.boardList(rowMaker);
-		assertEquals(0, ar.size()); //빨가면 성공
-		System.out.println("ar1 title"+ar.get(0).getTitle());
-		*/
+		RowMaker rowMaker = pageMaker.getRowMaker("writer", "hi");
+		List<BoardDTO> ar =dao.boardList(rowMaker,"","");
+		assertNotEquals(0, ar.size()); 
+		for(int i=0;i<ar.size();i++){
+			
+			System.out.println("ar"+i+ "title= "+ar.get(i).getTitle());
+		}*/
 		
+		/*
 		int totalCount = dao.boardCount();
 		assertNotEquals(-1, totalCount); 
 		System.out.println("totlaCount = "+totalCount);
+		*/
+		
+		
+		ListInfo listInfo = new ListInfo();
+		listInfo.setFind("HANI");
+		listInfo.setSearch("writer");
+		int count = dao.boardCount(listInfo);
+		
+		System.out.println("count= "+count);
+		assertNotEquals(0, count);
 		
 		
 	}

@@ -29,7 +29,7 @@ public class FreeBoardDAOImpl implements BoardDAO{
 
 	
 	@Override
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
+	public List<BoardDTO> boardList(RowMaker rowMaker, String search, String find) throws Exception {
 		
 		return sqlSession.selectList(NAMESPACE+"list", rowMaker); //Mapper에서는 그냥 제네릭으로 알려주고 여기서 list임을 알려줌
 		/*

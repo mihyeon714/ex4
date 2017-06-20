@@ -18,12 +18,12 @@ public class FreeBoardServiceImpl implements BoardService{
 	
 
 	@Override
-	public List<BoardDTO> boardList(int curPage) throws Exception {
+	public List<BoardDTO> boardList(int curPage, String search, String find) throws Exception {
 		//int totalCount = freeBoardDAO.boardCount();
 		PageMaker pageMaker = new PageMaker(curPage);
 		pageMaker.getMakePage(30);
 
-		return freeBoardDAO.boardList(pageMaker.getRowMaker("", ""));
+		return freeBoardDAO.boardList(pageMaker.getRowMaker("", ""),search,find);
 	}
 
 
